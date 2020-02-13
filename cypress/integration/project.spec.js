@@ -41,9 +41,11 @@ describe('HTML and CSS Project', () => {
   it('A página deve possuir pelo menos um link externo (não se esqueça de configurar a abertura desse link em uma nova aba)', () => {
     cy.visit('./index.html');
     cy.get('a')
-    .should('have.attr', 'href')
-    .then((href) => {
-        cy.get(href).should('not.be.empty')  //To assert, not to be empty
+    .then((a) => {
+      const actual = Array.from(a).some(element => (
+        element.target === '_blank' && element.href !== ''
+      ));
+      expect(actual).to.be.true
     });
   });
 
